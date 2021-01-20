@@ -1,3 +1,85 @@
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+$box-size: 100px;
+
 body {
   margin: 0;
+}
+
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+  width: $box-size * 7;
+
+  div {
+    display: flex;
+    justify-content: center;
+
+    height: $box-size;
+    width: $box-size;
+    line-height: $box-size;
+    gap: 10px 10px;
+
+    background-color: #eee;
+    border: 1px solid black;
+
+    &:hover {
+      position: relative;
+    
+      transform: translate(0, -20px);
+      transition: all 0.5s 0.2s;
+      background-color: pink;
+      cursor: pointer;
+    }
+
+    &-30 {
+      div:nth-last-child(-n+1) {
+        display: none;
+      }
+    }
+    
+    &-29 {
+      div:nth-last-child(-n+2) {
+        display: none;
+      }
+    }
+    
+    &-28 {
+      div:nth-last-child(-n+3) {
+        display: none;
+      }
+    }
+  }
+}
+
+@for $i from 1 through 31 {
+  .calendar div:nth-child(#{$i}) {
+    &::after {
+      content: "#{$i}";
+    }
+  }
+}
+
+$week:
+  ("sun": ($box-size) * 6,
+  "sat": ($box-size )* 5,
+  "fri": ($box-size )* 4,
+  "thu": ($box-size )* 3,
+  "wed": ($box-size )* 2,
+  "tue": $box-size ,
+  "mon": 0,
+);
+
+@each $days, $box-size in $week {
+  .calendar-#{$days} div:first-child {
+    margin-left: $box-size;
+  }
 }
